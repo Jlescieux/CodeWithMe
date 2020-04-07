@@ -1,0 +1,27 @@
+WORKS WITH, 0N TECHNO, 0N USER
+USER : id, firstname, lastname, username, password, mail, jobTitle, city, score, photo, description, urlFacebook, urlTwitter, urlLinkedin, urlGithub, isActive
+HAS, 11 USER, 0N ROLE
+ROLE : id, name, code
+
+TECHNO : id, name
+CAN DO, 0N SKILL, 0N USER
+WRITE, 0N USER, 11 COMMENT
+REQUEST BY, 0N USER, 11 REQUEST
+FOLLOWED BY, ON USER, 11 FOLLOW
+
+WANT, 0N TECHNO, 0N PROJECT
+SKILL : id, name
+COMMENT : id, content, createdAt, isActive
+REQUEST : id,  requestContent, response, responseContent, createdAt, updatedAt
+FOLLOW : id,  isFollowed
+
+STATUT : id, name
+SEARCH, 0N SKILL, 0N PROJECT
+POST, 11 COMMENT, 0N PROJECT
+REQUEST TO, 0N PROJECT, 11 REQUEST
+FOLLOWED TO, ON PROJECT, 11 FOLLOW
+
+IS, 11 PROJECT, 0N STATUT
+PROJECT : id, title, description, content, image, nbCollaborators, nbLikes, createdAt, urlFacebook, urlTwitter, urlGithub, urlTipeee, isSleeping, isActive
+RELATED TO, 0N PROJECT, 0N TAG
+TAG : id, name
