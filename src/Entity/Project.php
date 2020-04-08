@@ -121,6 +121,10 @@ class Project
 
     public function __construct()
     {
+        $this->nbLikes = 0;
+        $this->createdAt = new \Datetime();
+        $this->isSleeping = 0;
+        $this->isActive = 1;
         $this->comments = new ArrayCollection();
         $this->requests = new ArrayCollection();
         $this->follows = new ArrayCollection();

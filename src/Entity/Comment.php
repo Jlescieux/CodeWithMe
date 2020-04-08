@@ -37,6 +37,12 @@ class Comment
      */
     private $project;
 
+    public function __construct()
+    {
+        $this->createdAt = new \Datetime();
+        $this->isActive = 1;
+    }
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)

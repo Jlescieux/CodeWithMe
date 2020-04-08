@@ -32,6 +32,11 @@ class Follow
      */
     private $project;
 
+    public function __construct()
+    {
+        $this->isFollowed = 1;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

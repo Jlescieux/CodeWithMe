@@ -126,6 +126,7 @@ class User
 
     public function __construct()
     {
+        $this->isActive = 1;
         $this->comments = new ArrayCollection();
         $this->requests = new ArrayCollection();
         $this->follows = new ArrayCollection();
