@@ -8,18 +8,21 @@ CAN DO, 0N SKILL, 0N USER
 WRITE, 0N USER, 11 COMMENT
 REQUEST BY, 0N USER, 11 REQUEST
 FOLLOWED BY, ON USER, 11 FOLLOW
+WORKS ON, ON USER, 11 COLLABORATION
 
 WANT, 0N TECHNO, 0N PROJECT
 SKILL : id, name
 COMMENT : id, content, createdAt, isActive
 REQUEST : id,  requestContent, response, responseContent, createdAt, updatedAt
 FOLLOW : id,  isFollowed
+COLLABORATION: id, isOwner, joinedAt
 
 STATUT : id, name
 SEARCH, 0N SKILL, 0N PROJECT
 POST, 11 COMMENT, 0N PROJECT
 REQUEST TO, 0N PROJECT, 11 REQUEST
 FOLLOWED TO, ON PROJECT, 11 FOLLOW
+IS JOINED BY, 1N PROJECT, 11 COLLABORATION
 
 IS, 11 PROJECT, 0N STATUT
 PROJECT : id, title, description, content, image, nbCollaborators, nbLikes, createdAt, urlFacebook, urlTwitter, urlGithub, urlTipeee, isSleeping, isActive

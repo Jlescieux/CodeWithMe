@@ -313,6 +313,16 @@ Dosis et Lato
 |user|entity|NULL|L'utilisateur qui a suivi/liké le projet|
 |project|entity|NOT NULL|Le projet suivi/liké par l'utilisateur|
 
+### Collaboration (`Collaboration`)
+
+|Champ|Type|Spécificités|Description|
+|-|-|-|-|
+|id|INT|PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT|L'identifiant de la demande|
+|isOwner|BOOLEAN|NOT NULL|Est-ce que l'utilisateur est le créateur du projet|
+|joinedAt|DATETIME|NOT NULL|La date dou l'utilisateur à rejoint le projet|
+|user|entity|NOT NULL|L'utilisateur qui fait parti du projet|
+|project|entity|NOT NULL|Le projet auquel fait parti l'utilisateur|
+
 
 ## 3.4. Modèle conceptuel de données <a id="3.4"></a>
 

@@ -124,6 +124,11 @@ class User
      */
     private $skills;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Collaboration", mappedBy="user", orphanRemoval=true)
+     */
+    private $projects;
+
     public function __construct()
     {
         $this->isActive = 1;
@@ -132,6 +137,7 @@ class User
         $this->follows = new ArrayCollection();
         $this->technos = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -471,6 +477,37 @@ class User
     {
         if ($this->skills->contains($skill)) {
             $this->skills->removeElement($skill);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Collaboration[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Collaboration $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Collaboration $project): self
+    {
+        if ($this->projects->contains($project)) {
+            $this->projects->removeElement($project);
+            // set the owning side to null (unless already changed)
+            if ($project->getUser() === $this) {
+                $project->setUser(null);
+            }
         }
 
         return $this;

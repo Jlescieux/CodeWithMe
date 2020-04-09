@@ -1,4 +1,6 @@
 {
+    "name": "CodeWithMe",
+    "description": "Collaborative research platform",    
     "type": "project",
     "license": "proprietary",
     "require": {
