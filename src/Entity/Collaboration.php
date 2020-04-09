@@ -38,6 +38,11 @@ class Collaboration
      */
     private $project;
 
+    public function __construct()
+    {
+        $this->joinedAt = new \Datetime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
