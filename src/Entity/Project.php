@@ -44,11 +44,6 @@ class Project
     private $nbCollaborators;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $nbLikes;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -126,7 +121,6 @@ class Project
 
     public function __construct()
     {
-        $this->nbLikes = 0;
         $this->createdAt = new \Datetime();
         $this->isSleeping = 0;
         $this->isActive = 1;
@@ -200,18 +194,6 @@ class Project
     public function setNbCollaborators(int $nbCollaborators): self
     {
         $this->nbCollaborators = $nbCollaborators;
-
-        return $this;
-    }
-
-    public function getNbLikes(): ?int
-    {
-        return $this->nbLikes;
-    }
-
-    public function setNbLikes(int $nbLikes): self
-    {
-        $this->nbLikes = $nbLikes;
 
         return $this;
     }

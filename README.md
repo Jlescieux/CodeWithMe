@@ -194,7 +194,6 @@ Dosis et Lato
 |content|TEXT|NOT NULL|Le contenu détaillé du projet et les attentes|
 |image|TEXT|NULL|L'image d'illustration du projet|
 |nbCollaborators|INT|NOT NULL|Le nombre de personnes souhaitées sur le projet|
-|nbLikes|INT|NOT NULL|Le nombre de personnes qui aiment et suivent le projet|
 |createdAt|DATETIME|NOT NULL|La date de création du projet|
 |urlFacebook|TEXT|NULL|Lien vers la page Facebook du projet|
 |urlTwitter|TEXT|NULL|Lien vers la page Twitter du projet|
