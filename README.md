@@ -287,7 +287,6 @@ Dosis et Lato
 |-|-|-|-|
 |id|INT|PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT|L'identifiant du rôle|
 |name|VARCHAR(100)|NOT NULL|Le nom du rôle|
-|code|VARCHAR(100)|NOT NULL|Le code du rôle|
 |users|entity|NULL|Les utilisateurs qui possédent ce role|
 
 ### Demande (`Request`)

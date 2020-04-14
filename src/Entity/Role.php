@@ -24,11 +24,6 @@ class Role
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $code;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="role")
      */
     private $users;
@@ -51,18 +46,6 @@ class Role
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    public function setCode(string $code): self
-    {
-        $this->code = $code;
 
         return $this;
     }

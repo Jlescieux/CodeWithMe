@@ -1,7 +1,7 @@
 WORKS WITH, 0N TECHNO, 0N USER
 USER : id, firstname, lastname, username, password, mail, jobTitle, city, score, photo, description, urlFacebook, urlTwitter, urlLinkedin, urlGithub, isActive
 HAS, 11 USER, 0N ROLE
-ROLE : id, name, code
+ROLE : id, name
 
 TECHNO : id, name
 CAN DO, 0N SKILL, 0N USER
