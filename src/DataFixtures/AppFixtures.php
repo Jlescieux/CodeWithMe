@@ -46,36 +46,6 @@ class AppFixtures extends Fixture
 
         // REMPLIT LES TABLES SIMPLES
 
-        // table "Statut"
-        $status = [];
-        for ($i = 0; $i < 3; $i++) {
-            $status[$i] = new Statut();
-            $status[$i]->setName($generator->unique()->statutName());
-            $manager->persist($status[$i]);
-        }
-
-        // table "Project"    
-        $projects = [];
-        for ($j = 0; $j < 10; $j++) {
-            $projects[$j] = new Project();
-            $projects[$j]->setTitle($generator->unique(true)->projectTitle())
-                ->setDescription($generator->realText($maxNbChars = 100, $indexSize = 2))
-                ->setContent($generator->realText($maxNbChars = 1000, $indexSize = 2))
-                ->setImage($generator->imageUrl($width = 600, $height = 600, 'business'))
-                ->setNbCollaborators($generator->numberBetween($min = 1, $max = 10))
-                ->setCreatedAt($generator->datetime('now', 'Europe/Paris'))
-                ->setUrlFacebook('https://fr-fr.facebook.com/' . $projects[$j]->getTitle())
-                ->setUrlGithub('https://github.com/' . $generator->userName() . '/' . $projects[$j]->getTitle())
-                ->setUrlTwitter('https://twitter.com/' . $projects[$j]->getTitle())
-                ->setUrlTipeee('https://fr.tipeee.com/' . $projects[$j]->getTitle());
-            $manager->persist($projects[$j]);
-            // on récupère un statut dans le tableau des status
-            $randomStatut = $status[rand(0, (count($status) - 1))];
-            // puis on l'ajoute au project
-            $projects[$j]->setStatut($randomStatut);
-            $manager->persist($projects[$j]);
-        }
-
         // table "Role"
         $utilisateur = new Role();
         $utilisateur->setName('Utilisateur');
@@ -108,7 +78,7 @@ class AppFixtures extends Fixture
         
         // table "User"
         $users = [];
-        for ($j = 0; $j < 10; $j++) {
+        for ($j = 0; $j < 20; $j++) {
             $users[$j] = new User();
             $users[$j]->setFirstName($generator->firstName())
                 ->setLastname($generator->lastName())
@@ -126,6 +96,37 @@ class AppFixtures extends Fixture
                 ->setUrlGithub('https://github.com/' . $users[$j]->getUsername())
                 ->setRole($utilisateur);
             $manager->persist($users[$j]);
+        }
+
+        // table "Statut"
+        $status = [];
+        for ($i = 0; $i < 3; $i++) {
+            $status[$i] = new Statut();
+            $status[$i]->setName($generator->unique()->statutName());
+            $manager->persist($status[$i]);
+        }
+
+        // table "Project"    
+        $projects = [];
+        for ($j = 0; $j < 10; $j++) {
+            $projects[$j] = new Project();
+            $projects[$j]->setTitle($generator->unique(true)->projectTitle())
+                ->setDescription($generator->realText($maxNbChars = 100, $indexSize = 2))
+                ->setContent($generator->realText($maxNbChars = 1000, $indexSize = 2))
+                ->setImage($generator->imageUrl($width = 600, $height = 600, 'business'))
+                ->setNbCollaborators($generator->numberBetween($min = 1, $max = 10))
+                ->setCreatedAt($generator->datetime('now', 'Europe/Paris'))
+                ->setUrlFacebook('https://fr-fr.facebook.com/' . $projects[$j]->getTitle())
+                ->setUrlGithub('https://github.com/' . $generator->userName() . '/' . $projects[$j]->getTitle())
+                ->setUrlTwitter('https://twitter.com/' . $projects[$j]->getTitle())
+                ->setUrlTipeee('https://fr.tipeee.com/' . $projects[$j]->getTitle());
+            // on récupère un statut et un créateur au hasard
+            $randomStatut = $status[rand(0, (count($status) - 1))];
+            $randomUser = $users[rand(0, (count($users) - 1))];
+            // puis on les ajoutes au projet
+            $projects[$j]->setStatut($randomStatut);
+            $projects[$j]->setOwner($randomUser);
+            $manager->persist($projects[$j]);
         }
 
         // // table "Comment"

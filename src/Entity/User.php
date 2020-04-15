@@ -129,6 +129,11 @@ class User
      */
     private $projects;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="owner")
+     */
+    private $createdProjects;
+
     public function __construct()
     {
         $this->isActive = 1;
@@ -138,6 +143,7 @@ class User
         $this->technos = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->createdProjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -507,6 +513,37 @@ class User
             // set the owning side to null (unless already changed)
             if ($project->getUser() === $this) {
                 $project->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getCreatedProjects(): Collection
+    {
+        return $this->createdProjects;
+    }
+
+    public function addCreatedProject(Project $createdProject): self
+    {
+        if (!$this->createdProjects->contains($createdProject)) {
+            $this->createdProjects[] = $createdProject;
+            $createdProject->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatedProject(Project $createdProject): self
+    {
+        if ($this->createdProjects->contains($createdProject)) {
+            $this->createdProjects->removeElement($createdProject);
+            // set the owning side to null (unless already changed)
+            if ($createdProject->getOwner() === $this) {
+                $createdProject->setOwner(null);
             }
         }
 

@@ -201,6 +201,7 @@ Dosis et Lato
 |urlTipeee|TEXT|NULL|Lien vers le compte Tipee du projet|
 |isSleeping|BOOLEAN|NOT NULL|Est-ce que le projet est en pause|
 |isActive|BOOLEAN|NOT NULL|Est-ce que le projet est visible ou censuré|
+|owner|entity|NOT NULL|Le propriétaire du projet|
 |statut|entity|NOT NULL|Le statut du projet|
 |comments|entity|NULL| Les commentaires concernant le projet|
 |requests|entity|NULL|Les demandes de participation au projet|
@@ -316,7 +317,6 @@ Dosis et Lato
 |Champ|Type|Spécificités|Description|
 |-|-|-|-|
 |id|INT|PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT|L'identifiant de la demande|
-|isOwner|BOOLEAN|NOT NULL|Est-ce que l'utilisateur est le créateur du projet|
 |joinedAt|DATETIME|NOT NULL|La date dou l'utilisateur à rejoint le projet|
 |user|entity|NOT NULL|L'utilisateur qui fait parti du projet|
 |project|entity|NOT NULL|Le projet auquel fait parti l'utilisateur|

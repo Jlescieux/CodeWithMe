@@ -15,7 +15,7 @@ SKILL : id, name
 COMMENT : id, content, createdAt, isActive
 REQUEST : id,  requestContent, response, responseContent, createdAt, updatedAt
 FOLLOW : id,  isFollowed
-COLLABORATION: id, isOwner, joinedAt
+COLLABORATION: id, joinedAt
 
 STATUT : id, name
 SEARCH, 0N SKILL, 0N PROJECT
@@ -25,6 +25,6 @@ FOLLOWED TO, ON PROJECT, 11 FOLLOW
 IS JOINED BY, 1N PROJECT, 11 COLLABORATION
 
 IS, 11 PROJECT, 0N STATUT
-PROJECT : id, title, description, content, image, nbCollaborators, createdAt, urlFacebook, urlTwitter, urlGithub, urlTipeee, isSleeping, isActive
+PROJECT : id, title, description, content, image, nbCollaborators, createdAt, urlFacebook, urlTwitter, urlGithub, urlTipeee, isSleeping, isActive, owner
 RELATED TO, 0N PROJECT, 0N TAG
 TAG : id, name

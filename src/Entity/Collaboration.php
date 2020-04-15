@@ -17,11 +17,6 @@ class Collaboration
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isOwner;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $joinedAt;
@@ -46,18 +41,6 @@ class Collaboration
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getisOwner(): ?bool
-    {
-        return $this->isOwner;
-    }
-
-    public function setisOwner(bool $isOwner): self
-    {
-        $this->isOwner = $isOwner;
-
-        return $this;
     }
 
     public function getJoinedAt(): ?\DateTimeInterface

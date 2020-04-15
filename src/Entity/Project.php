@@ -79,6 +79,12 @@ class Project
     private $isActive;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdProjects")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Statut", inversedBy="projects")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -113,7 +119,7 @@ class Project
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="projects")
      */
     private $skills;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Collaboration", mappedBy="project", orphanRemoval=true)
      */
@@ -278,6 +284,18 @@ class Project
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
