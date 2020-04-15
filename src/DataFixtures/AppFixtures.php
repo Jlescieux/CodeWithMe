@@ -129,15 +129,20 @@ class AppFixtures extends Fixture
             $manager->persist($projects[$j]);
         }
 
-        // // table "Comment"
-        // $comments = [];
-        // for ($k = 0; $k < 30; $k++) {
-        //     $comments[$k] = new Comment();
-        //     $comments[$k]->setContent($generator->realText($maxNbChars = 100, $indexSize = 2))
-        //         ->setCreatedAt($generator->datetime('now', 'Europe/Paris'))
-        //         ->setCreatedAt($generator->datetime('now', 'Europe/Paris'));
-        //     $manager->persist($comments[$k]);
-        // }
+        // table "Comment"
+        $comments = [];
+        for ($k = 0; $k < 50; $k++) {
+            $comments[$k] = new Comment();
+            $comments[$k]->setContent($generator->realText($maxNbChars = 100, $indexSize = 2))
+                ->setCreatedAt($generator->datetime('now', 'Europe/Paris'));
+            // on récupère un projet et un utilisateur au hasard
+            $randomProject = $projects[rand(0, (count($projects) - 1))];
+            $randomUser = $users[rand(0, (count($users) - 1))];
+            // puis on les ajoutes au commentaire
+            $comments[$k]->setProject($randomProject);
+            $comments[$k]->setUser($randomUser);
+            $manager->persist($comments[$k]);
+        }
 
         $manager->flush();
     }
