@@ -84,24 +84,24 @@ class AppFixtures extends Fixture
 
         // table "User"
         $users = [];
-        for ($j = 0; $j < 20; $j++) {
-            $users[$j] = new User();
-            $users[$j]->setFirstName($generator->firstName())
+        for ($i = 0; $i < 20; $i++) {
+            $users[$i] = new User();
+            $users[$i]->setFirstName($generator->firstName())
                 ->setLastname($generator->lastName())
-                ->setUsername($users[$j]->getFirstname() . '-' . $users[$j]->getLastname())
-                ->setPassword($users[$j]->getUsername())
-                ->setMail($users[$j]->getUsername() . '@gmail.com')
+                ->setUsername($users[$i]->getFirstname() . '-' . $users[$i]->getLastname())
+                ->setPassword($users[$i]->getUsername())
+                ->setMail($users[$i]->getUsername() . '@gmail.com')
                 ->setJobTitle($generator->unique(true)->jobTitle())
                 ->setScore($generator->numberBetween($min = 1, $max = 5))
                 ->setCity($generator->city())
                 ->setPhoto($generator->imageUrl($width = 460, $height = 460, 'people'))
                 ->setDescription($generator->realText($maxNbChars = 200, $indexSize = 2))
-                ->setUrlFacebook('https://fr-fr.facebook.com/' . $users[$j]->getUsername())
-                ->setUrlTwitter('https://twitter.com/' . $users[$j]->getUsername())
-                ->setUrlLinkedin('https://fr.linkedin.com/in/' . $users[$j]->getUsername())
-                ->setUrlGithub('https://github.com/' . $users[$j]->getUsername())
+                ->setUrlFacebook('https://fr-fr.facebook.com/' . $users[$i]->getUsername())
+                ->setUrlTwitter('https://twitter.com/' . $users[$i]->getUsername())
+                ->setUrlLinkedin('https://fr.linkedin.com/in/' . $users[$i]->getUsername())
+                ->setUrlGithub('https://github.com/' . $users[$i]->getUsername())
                 ->setRole($utilisateur);
-            $manager->persist($users[$j]);
+            $manager->persist($users[$i]);
         }
 
         // table "Statut"
@@ -114,25 +114,25 @@ class AppFixtures extends Fixture
 
         // table "Project"    
         $projects = [];
-        for ($j = 0; $j < 10; $j++) {
-            $projects[$j] = new Project();
-            $projects[$j]->setTitle($generator->unique(true)->projectTitle())
+        for ($i = 0; $i < 10; $i++) {
+            $projects[$i] = new Project();
+            $projects[$i]->setTitle($generator->unique(true)->projectTitle())
                 ->setDescription($generator->realText($maxNbChars = 100, $indexSize = 2))
                 ->setContent($generator->realText($maxNbChars = 1000, $indexSize = 2))
                 ->setImage($generator->imageUrl($width = 600, $height = 600, 'business'))
                 ->setNbCollaborators($generator->numberBetween($min = 1, $max = 10))
-                ->setCreatedAt($generator->datetime('now', 'Europe/Paris'))
-                ->setUrlFacebook('https://fr-fr.facebook.com/' . $projects[$j]->getTitle())
-                ->setUrlGithub('https://github.com/' . $generator->userName() . '/' . $projects[$j]->getTitle())
-                ->setUrlTwitter('https://twitter.com/' . $projects[$j]->getTitle())
-                ->setUrlTipeee('https://fr.tipeee.com/' . $projects[$j]->getTitle());
+                ->setCreatedAt($generator->dateTimeBetween('-6 months'))
+                ->setUrlFacebook('https://fr-fr.facebook.com/' . $projects[$i]->getTitle())
+                ->setUrlGithub('https://github.com/' . $generator->userName() . '/' . $projects[$i]->getTitle())
+                ->setUrlTwitter('https://twitter.com/' . $projects[$i]->getTitle())
+                ->setUrlTipeee('https://fr.tipeee.com/' . $projects[$i]->getTitle());
             // nous récupèrons un statut et un créateur au hasard
             $randomStatut = $status[mt_rand(0, (count($status) - 1))];
             $randomUser = $users[mt_rand(0, (count($users) - 1))];
             // puis nous les ajoutons au projet
-            $projects[$j]->setStatut($randomStatut);
-            $projects[$j]->setOwner($randomUser);
-            $manager->persist($projects[$j]);
+            $projects[$i]->setStatut($randomStatut);
+            $projects[$i]->setOwner($randomUser);
+            $manager->persist($projects[$i]);
         }
 
         // table "Tag"
@@ -161,17 +161,19 @@ class AppFixtures extends Fixture
 
         // table "Comment"
         $comments = [];
-        for ($k = 0; $k < 50; $k++) {
-            $comments[$k] = new Comment();
-            $comments[$k]->setContent($generator->realText($maxNbChars = 100, $indexSize = 2))
-                ->setCreatedAt($generator->datetime('now', 'Europe/Paris'));
+        for ($i = 0; $i < 50; $i++) {
+            $comments[$i] = new Comment();
             // nous récupèrons un projet et un utilisateur au hasard
             $randomProject = $projects[mt_rand(0, (count($projects) - 1))];
             $randomUser = $users[mt_rand(0, (count($users) - 1))];
             // puis nous les ajoutons au commentaire
-            $comments[$k]->setProject($randomProject);
-            $comments[$k]->setUser($randomUser);
-            $manager->persist($comments[$k]);
+            $comments[$i]->setProject($randomProject);
+            $comments[$i]->setUser($randomUser);
+            // stocke le nombre de jours entre la date de création du projet et la date actuelle
+            $days = (new \Datetime())->diff($randomProject->getCreatedAt())->days;
+            $comments[$i]->setContent($generator->realText($maxNbChars = 100, $indexSize = 2))
+                ->setCreatedAt($generator->dateTimeBetween('-' . $days . ' days'));
+            $manager->persist($comments[$i]);
         }
 
         // table "Follow"
@@ -186,7 +188,7 @@ class AppFixtures extends Fixture
                 $manager->persist($follow);
             }
         }
-        
+
         // REMPLIT LES TABLES DE RELATIONS "MANY TO MANY"
 
         // table "project_tag"
@@ -200,7 +202,7 @@ class AppFixtures extends Fixture
         }
 
         // table "project_techno"
-        foreach ($projects as $project){
+        foreach ($projects as $project) {
             shuffle($technos);
             $technoCount = mt_rand(1, 5);
             for ($i = 1; $i <= $technoCount; $i++) {
@@ -219,35 +221,37 @@ class AppFixtures extends Fixture
             $manager->persist($project);
         }
 
-         // table "user_skill"
-         foreach ($users as $user) {
-             shuffle($skills);
-             $skillCount = mt_rand(1, 2);
-             for ($i = 1; $i <= $skillCount; $i++) {
-                 $user->addSkill($skills[$i]);
-             }
-             $manager->persist($user);
-         }
- 
-         // table "user_techno"
-         foreach ($users as $user) {
-             shuffle($technos);
-             $technoCount = mt_rand(1, 5);
-             for ($i = 1; $i <= $technoCount; $i++) {
-                 $user->addTechno($technos[$i]);
-             }
-             $manager->persist($user);
-         }
-        
+        // table "user_skill"
+        foreach ($users as $user) {
+            shuffle($skills);
+            $skillCount = mt_rand(1, 2);
+            for ($i = 1; $i <= $skillCount; $i++) {
+                $user->addSkill($skills[$i]);
+            }
+            $manager->persist($user);
+        }
+
+        // table "user_techno"
+        foreach ($users as $user) {
+            shuffle($technos);
+            $technoCount = mt_rand(1, 5);
+            for ($i = 1; $i <= $technoCount; $i++) {
+                $user->addTechno($technos[$i]);
+            }
+            $manager->persist($user);
+        }
+
         // table "Collaboration"
         foreach ($projects as $project) {
             shuffle($users);
             $userCount = mt_rand(0, 5);
             for ($i = 0; $i <= $userCount; $i++) {
                 $collaboration = new Collaboration;
-                $collaboration->setjoinedAt($generator->datetime('now', 'Europe/Paris'));
                 $collaboration->setUser($users[$i]);
                 $collaboration->setProject($project);
+                // stocke le nombre de jours entre la date de création du projet et la date actuelle
+                $days = (new \Datetime())->diff($project->getCreatedAt())->days;
+                $collaboration->setjoinedAt($generator->dateTimeBetween('-' . $days . ' days'));
                 $manager->persist($collaboration);
             }
         }
