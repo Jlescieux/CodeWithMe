@@ -12,6 +12,7 @@ use App\Entity\Statut;
 use App\Entity\Techno;
 use App\Entity\Comment;
 use App\Entity\Project;
+use App\Helpers\Sluggifier;
 use App\Entity\Collaboration;
 use App\DataFixtures\Provider;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -23,10 +24,12 @@ class AppFixtures extends Fixture
 
     // Permet d'encoder les mots de passe en BDD
     private $encoder;
+    private $sluggifier;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordEncoderInterface $encoder, Sluggifier $sluggifier)
     {
         $this->encoder = $encoder;
+        $this->sluggifier = $sluggifier;
     }
 
     public function load(ObjectManager $manager)
@@ -96,10 +99,10 @@ class AppFixtures extends Fixture
                 ->setCity($generator->city())
                 ->setPhoto($generator->imageUrl($width = 460, $height = 460, 'people'))
                 ->setDescription($generator->realText($maxNbChars = 200, $indexSize = 2))
-                ->setUrlFacebook('https://fr-fr.facebook.com/' . $users[$i]->getUsername())
-                ->setUrlTwitter('https://twitter.com/' . $users[$i]->getUsername())
-                ->setUrlLinkedin('https://fr.linkedin.com/in/' . $users[$i]->getUsername())
-                ->setUrlGithub('https://github.com/' . $users[$i]->getUsername())
+                ->setUrlFacebook('https://fr-fr.facebook.com/' . $this->sluggifier->sluggify($users[$i]->getUsername(), '.'))
+                ->setUrlTwitter('https://twitter.com/' . $this->sluggifier->sluggify($users[$i]->getUsername(), '_'))
+                ->setUrlLinkedin('https://fr.linkedin.com/in/' . $this->sluggifier->sluggify($users[$i]->getUsername()))
+                ->setUrlGithub('https://github.com/' . $this->sluggifier->sluggify($users[$i]->getUsername()))
                 ->setRole($utilisateur);
             $manager->persist($users[$i]);
         }
@@ -116,16 +119,16 @@ class AppFixtures extends Fixture
         $projects = [];
         for ($i = 0; $i < 10; $i++) {
             $projects[$i] = new Project();
-            $projects[$i]->setTitle($generator->unique(true)->projectTitle())
+            $projects[$i]->setTitle($generator->unique()->projectTitle())
                 ->setDescription($generator->realText($maxNbChars = 100, $indexSize = 2))
                 ->setContent($generator->realText($maxNbChars = 1000, $indexSize = 2))
                 ->setImage($generator->imageUrl($width = 600, $height = 600, 'business'))
                 ->setNbCollaborators($generator->numberBetween($min = 1, $max = 10))
                 ->setCreatedAt($generator->dateTimeBetween('-6 months'))
-                ->setUrlFacebook('https://fr-fr.facebook.com/' . $projects[$i]->getTitle())
-                ->setUrlGithub('https://github.com/' . $generator->userName() . '/' . $projects[$i]->getTitle())
-                ->setUrlTwitter('https://twitter.com/' . $projects[$i]->getTitle())
-                ->setUrlTipeee('https://fr.tipeee.com/' . $projects[$i]->getTitle());
+                ->setUrlFacebook('https://fr-fr.facebook.com/' . $this->sluggifier->sluggify($projects[$i]->getTitle()))
+                ->setUrlGithub('https://github.com/' . $this->sluggifier->sluggify($generator->userName()) . '/' . $this->sluggifier->sluggify($projects[$i]->getTitle()))
+                ->setUrlTwitter('https://twitter.com/' . $this->sluggifier->sluggify($projects[$i]->getTitle()))
+                ->setUrlTipeee('https://fr.tipeee.com/' . $this->sluggifier->sluggify($projects[$i]->getTitle()));
             // nous récupèrons un statut et un créateur au hasard
             $randomStatut = $status[mt_rand(0, (count($status) - 1))];
             $randomUser = $users[mt_rand(0, (count($users) - 1))];
