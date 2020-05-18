@@ -69,10 +69,15 @@ class Project
     private $urlTipeee;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbLikes;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isSleeping;
-
+    
     /**
      * @ORM\Column(type="boolean")
      */
@@ -125,9 +130,11 @@ class Project
      */
     private $users;
 
+
     public function __construct()
     {
         $this->createdAt = new \Datetime();
+        $this->nbLikes = 0;
         $this->isSleeping = 0;
         $this->isActive = 1;
         $this->comments = new ArrayCollection();
@@ -260,6 +267,18 @@ class Project
     public function setUrlTipeee(?string $urlTipeee): self
     {
         $this->urlTipeee = $urlTipeee;
+
+        return $this;
+    }
+
+    public function getNbLikes(): ?int
+    {
+        return $this->nbLikes;
+    }
+
+    public function setNbLikes(int $nbLikes): self
+    {
+        $this->nbLikes = $nbLikes;
 
         return $this;
     }

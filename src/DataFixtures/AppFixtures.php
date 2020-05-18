@@ -181,6 +181,7 @@ class AppFixtures extends Fixture
 
         // table "Follow"
         foreach ($projects as $project) {
+            $nbLikes = 0;
             shuffle($users);
             $userCount = mt_rand(0, (count($users) - 1));
             for ($i = 0; $i <= $userCount; $i++) {
@@ -189,6 +190,9 @@ class AppFixtures extends Fixture
                 $follow->setProject($project);
                 $follow->setUser($users[$i]);
                 $manager->persist($follow);
+                // nous mettons à jour le champ nbLikes du projet
+                $nbLikes++;
+                $project->setNbLikes($nbLikes);
             }
         }
 

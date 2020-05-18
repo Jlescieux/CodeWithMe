@@ -199,6 +199,7 @@ Dosis et Lato
 |urlTwitter|TEXT|NULL|Lien vers la page Twitter du projet|
 |urlGithub|TEXT|NULL|Lien vers le repo Github du projet|
 |urlTipeee|TEXT|NULL|Lien vers le compte Tipee du projet|
+|nbLikes|INT|NOT NULL|Nombre d'utilisateurs qui aiment et suivent le projet|
 |isSleeping|BOOLEAN|NOT NULL|Est-ce que le projet est en pause|
 |isActive|BOOLEAN|NOT NULL|Est-ce que le projet est visible ou censuré|
 |owner|entity|NOT NULL|Le propriétaire du projet|

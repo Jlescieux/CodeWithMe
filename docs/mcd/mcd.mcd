@@ -25,6 +25,6 @@ FOLLOWED TO, ON PROJECT, 11 FOLLOW
 IS JOINED BY, 1N PROJECT, 11 COLLABORATION
 
 IS, 11 PROJECT, 0N STATUT
-PROJECT : id, title, description, content, image, nbCollaborators, createdAt, urlFacebook, urlTwitter, urlGithub, urlTipeee, isSleeping, isActive, owner
+PROJECT : id, title, description, content, image, nbCollaborators, createdAt, urlFacebook, urlTwitter, urlGithub, urlTipeee, nbLikes, isSleeping, isActive, owner
 RELATED TO, 0N PROJECT, 0N TAG
 TAG : id, name
