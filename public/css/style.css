@@ -1,22 +1,24 @@
 /* Layout général */
 
+
 body {
   font-family: "Open Sans", sans-serif;
   background-color: ghostwhite;
 }
 
 a {
-  color: #3c3c3c;
   text-decoration: none;
 }
 
 /* Header */
+
+
 header {
   display: flex;
   justify-content: space-around;
 }
 
-.header-left {
+.header_left {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -125,6 +127,7 @@ nav > ul {
   background-color: #ffbd59;
   font-weight: bold;
   font-size: 0.9rem;
+  color: #3c3c3c;
 }
 
 .header_auth_button:hover {
@@ -167,5 +170,60 @@ input:focus {
   cursor: pointer;
 }
 
-/* Corps de la page d'accueil */
+/* Main */
 
+
+.main_title {
+  text-align: center;
+  font-family: "Dosis", sans-serif;
+  font-size: 40px;
+}
+
+.top_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.top_card {
+  border: 10px solid #ffbd59;
+  border-radius: 15px;
+  width: 400px;
+  height: 500px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.top_card_top {
+  margin: 10px 5px 10px;
+}
+
+.top_card_top_infos {
+  float: left;
+  width: 50%;
+}
+
+.top_card_title {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.top_card_owner a {
+  font-weight: bold;
+}
+
+.top_card_top_image {
+  float: right;
+  width: 50%;  
+  height: 30%;
+}
+
+.top_card_top_image img{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.top_card_description {
+  margin-bottom: 10px;
+}
